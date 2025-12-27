@@ -21,11 +21,7 @@ fi
 REAL_USER=${SUDO_USER:-$USER}
 echo "Installing for user: $REAL_USER"
 
-# 2. Install System Dependencies
-echo -e "${GREEN}[1/5] Installing Fedora dependencies...${NC}"
-dnf install -y python3-hidapi python3-psutil
-
-# 3. Setup Permissions (Udev Rules)
+# 2. Setup Permissions (Udev Rules)
 echo -e "${GREEN}[2/5] Configuring USB permissions...${NC}"
 cat > /etc/udev/rules.d/99-cpu-cooler.rules <<EOF
 # HID 5131:2007 CPU Cooler Display
@@ -37,7 +33,7 @@ EOF
 udevadm control --reload-rules
 udevadm trigger
 
-# 4. Install the Python Script
+# 3. Install the Python Script
 echo -e "${GREEN}[3/5] Installing script to /usr/local/bin...${NC}"
 # We assume the python script is named 'cpu_cooler.py' and is in the current directory
 if [ -f "cpu_cooler.py" ]; then
@@ -48,7 +44,7 @@ else
     exit 1
 fi
 
-# 5. Create and Enable Systemd Service
+# 4. Create and Enable Systemd Service
 echo -e "${GREEN}[4/5] Creating background service...${NC}"
 cat > /etc/systemd/system/cpu-cooler.service <<EOF
 [Unit]

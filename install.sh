@@ -53,6 +53,7 @@ After=multi-user.target
 
 [Service]
 User=$REAL_USER
+ExecStartPre=/bin/sleep 10
 ExecStart=/usr/bin/python3 /usr/local/bin/cpu_cooler_display
 Restart=always
 RestartSec=5
